@@ -104,17 +104,21 @@ autoscaling:
   targetCPUUtilizationPercentage: 80
   # targetMemoryUtilizationPercentage: 80
 # Additional volumes on the output Deployment definition.
-volumes: []
-# - name: foo
-#   secret:
-#     secretName: mysecret
-#     optional: false
+volumes:
+  - name: cluster2-kubeconfig
+    secret:
+      secretName: cluster2-kubeconfig
+      optional: true
 
 # Additional volumeMounts on the output Deployment definition.
-volumeMounts: []
-# - name: foo
-#   mountPath: "/etc/foo"
-#   readOnly: true
+volumeMounts:
+  - name: cluster2-kubeconfig
+    mountPath: "/app/kubeconfigs/cluster2"
+    readOnly: true
+
+env:
+  - name: KUBECONFIG_CLUSTER2_PATH
+    value: /app/kubeconfigs/cluster2/config
 
 nodeSelector: {}
 tolerations: []
